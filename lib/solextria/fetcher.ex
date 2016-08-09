@@ -1,6 +1,7 @@
 defmodule Solextria.Fetcher do
   use HTTPoison.Base
   import Solextria.Utils
+  require Logger
 
   @moduledoc """
   Module that performs data fetching from solectria
@@ -28,6 +29,7 @@ defmodule Solextria.Fetcher do
     end
     base_url = if base_url |> is_nil, do: "http://solrenview.com", else: base_url
     url = build_url("#{base_url}#{uri}", site_id, start_ts, end_ts)
+    Logger.debug "The solectria URL is #{url}"
     get(url, [{"Authorization", auth_header}])
   end
 
