@@ -49,7 +49,7 @@ defmodule Solextria.Mixfile do
         "Samar Acharya"
       ],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/Brightergy/egaugex"},
+      links: %{"GitHub" => "https://github.com/Brightergy/solextria"},
       files: ~w(config lib logo mix.exs README.md LICENSE)
     ]
   end
