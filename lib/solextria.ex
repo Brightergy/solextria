@@ -6,14 +6,14 @@ defmodule Solextria do
   @doc """
   Module entry point to be used by external programs
   """
-  @spec solextria_parser(String.t, List.t) :: Tuple.t
-  def solextria_parser(site_id, opts \\ []) do
+  @spec get(String.t, List.t) :: Tuple.t
+  def get(site_id, opts \\ []) do
     username = opts[:username] || nil
     password = opts[:password] || nil
     base_url = opts[:base_url] || nil
     start_ts = opts[:start_ts] || nil
     end_ts = opts[:end_ts] || nil
-    uri = opts[:uri] || "/XMLFeed/ss-xmlN.php?show_whl=1&show_faults=1"
+    uri = opts[:uri] || "/XMLFeed/ss-xmlN.php?show_whl=1&show_faults=1&use_utc=1"
     realm = opts[:realm] || "Solren"
 
     result = Solextria.Fetcher.get_data(site_id, username, password, uri, realm, base_url, start_ts, end_ts)

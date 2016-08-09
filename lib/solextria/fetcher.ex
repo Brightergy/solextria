@@ -1,5 +1,6 @@
 defmodule Solextria.Fetcher do
   use HTTPoison.Base
+  import Solextria.Utils
 
   @moduledoc """
   Module that performs data fetching from solectria
@@ -26,11 +27,11 @@ defmodule Solextria.Fetcher do
       auth_header = HTTPDigex.create_digest(username, password, uri, realm)
     end
     base_url = if base_url |> is_nil, do: "http://solrenview.com", else: base_url
-    url = build_url(base_url, site_id, start_ts, end_ts)
+    url = build_url("#{base_url}#{uri}", site_id, start_ts, end_ts)
     get(url, [{"Authorization", auth_header}])
   end
 
-  defp build_url(url, site_id, start_ts, end_ts) do
+  def build_url(url, site_id, start_ts, end_ts) do
     url
     |> add_site_id(site_id)
     |> add_ts(start_ts, end_ts)
@@ -44,6 +45,29 @@ defmodule Solextria.Fetcher do
     end
   end
 
+  defp add_ts(url, start_ts, end_ts) when is_integer(start_ts) and is_integer(end_ts) do
+    _add_ts(url, start_ts, end_ts)
+  end
   defp add_ts(url, start_ts, end_ts) when is_nil(start_ts) and is_nil(end_ts) do
+    end_ts = current_ts
+      |> normalized_ts
+    start_ts = end_ts - 60
+    _add_ts(url, start_ts, end_ts)
+  end
+  defp add_ts(url, start_ts, end_ts) when is_nil(start_ts) do
+    start_ts = end_ts - 60
+    _add_ts(url, start_ts, end_ts)
+  end
+  defp add_ts(url, start_ts, end_ts) when is_nil(end_ts) do
+    end_ts = start_ts + 60
+    _add_ts(url, start_ts, end_ts)
+  end
+  defp add_ts(url, start_ts, end_ts), do: "#{url}&ts_start=#{start_ts}&ts_end=#{end_ts}"
+  defp _add_ts(url, start_ts, end_ts) do
+    end_time = end_ts
+      |> ts_to_iso8601
+    start_time = start_ts
+      |> ts_to_iso8601
+    "#{url}&ts_start=#{start_time}&ts_end=#{end_time}"
   end
 end

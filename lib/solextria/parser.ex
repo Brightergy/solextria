@@ -1,4 +1,4 @@
-defmodule Parser do
+defmodule Solextria.Parser do
   @moduledoc """
   Parser module to parse the xml body
   """
