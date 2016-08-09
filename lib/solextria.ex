@@ -1,0 +1,2 @@
+defmodule Solextria do
+end
