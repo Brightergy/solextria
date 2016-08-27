@@ -24,7 +24,6 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 ## Examples
 
-    ```elixir
     Solextria.get(148)
     {:ok,
      [{"t", "2016-08-09T06:56:50Z"},
@@ -94,7 +93,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
             {"p", [{"id", "TmpBOM"}], ["16.85"]},
             {"p", [{"id", "WndSpd"}], ["1.12"]},
             {"p", [{"id", "WndDir"}], ["162.30"]}]}]}]}]}
-    ```
+
 
 You can pass the following arguments as second parameter:
 
