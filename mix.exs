@@ -3,7 +3,7 @@ defmodule Solextria.Mixfile do
 
   def project do
     [app: :solextria,
-     version: "0.1.0",
+     version: "0.1.1",
      description: "Solectria DataLogger data fetcher and parser",
      source_url: "https://github.com/Brightergy/solextria",
      homepage_url: "https://github.com/Brightergy/solextria",
