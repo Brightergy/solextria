@@ -38,6 +38,7 @@ defmodule Solextria.Mixfile do
     [
       {:httpoison, "~> 0.8 or ~> 0.9.0"},
       {:floki, "~> 0.10.0"},
+      {:http_digex, "~> 0.0.1"},
       {:ex_doc, "~> 0.12", only: :dev},
       {:excoveralls, "~> 0.5", only: :test},
     ]

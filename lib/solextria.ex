@@ -3,6 +3,8 @@ defmodule Solextria do
   Gets and parses solectria data given the site id
   """
 
+  require Logger
+
   @doc """
   Module entry point to be used by external programs
   """
@@ -17,6 +19,7 @@ defmodule Solextria do
     realm = opts[:realm] || "Solren"
 
     result = Solextria.Fetcher.get_data(site_id, username, password, uri, realm, base_url, start_ts, end_ts)
+    Logger.debug inspect result
     case result do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, body}
