@@ -1,6 +1,26 @@
 defmodule Solextria do
   @moduledoc """
-  Gets and parses solectria data given the site id
+  Solextria is an API client to the XML Feed API of Solectria DataLoggers. Solectria dataloggers use Sunspec Alliance standardized data format.
+
+  This XML Feed client gets and parses solectria data given the site id.
+
+  ## Examples
+
+      iex> Solextria.get(148)
+
+      iex> Solextria.get(148, start_ts: 142342332, end_ts: 142344332)
+
+  You can pass following keyword arguments and Solextria should be able to handle it as long as solren supports:
+
+      [
+        username: "http_auth_user",
+        password: "http_auth_pass",
+        base_url: "custom_solren_url",
+        start_ts: start_unix_ts,
+        end_ts: end_unix_ts,
+        uri: "custom_xmlfeed_uri",
+        realm: "realm_to_auth_for"
+    ]
   """
 
   require Logger
