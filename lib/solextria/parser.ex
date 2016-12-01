@@ -10,7 +10,7 @@ defmodule Solextria.Parser do
     data_block = Floki.find(data, "sunspecplantextract")
     case length(data_block) do
       0 ->
-        :error
+        {:error, data}
       _ ->
         [{_, atts, values} | _rest] = data_block
         atts ++ values

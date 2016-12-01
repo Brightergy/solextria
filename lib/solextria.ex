@@ -41,9 +41,12 @@ defmodule Solextria do
     result = Solextria.Fetcher.get_data(site_id, username, password, uri, realm, base_url, start_ts, end_ts)
     Logger.debug inspect result
     case result do
+      {:ok, %HTTPoison.Response{status_code: 200, body: {:error, body}}} ->
+        {:error, body}
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, body}
       _ ->
+        Logger.info inspect result
         {:error, "An error occurred while fetching data!"}
     end
   end
