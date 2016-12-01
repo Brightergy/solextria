@@ -4,7 +4,7 @@ defmodule Solextria.Utils do
   """
   @epoch :calendar.datetime_to_gregorian_seconds({{1970, 1, 1}, {0, 0, 0}})
 
-  def build_http_opts(opts), do: Keyword.merge(Application.get_env(:solextria, :http_opts), opts)
+  def build_http_opts(opts), do: Keyword.merge((Application.get_env(:solextria, :http_opts) || []), opts)
 
   def current_ts, do: :os.system_time(:seconds)
 
