@@ -19,7 +19,8 @@ defmodule Solextria do
         start_ts: start_unix_ts,
         end_ts: end_unix_ts,
         uri: "custom_xmlfeed_uri",
-        realm: "realm_to_auth_for"
+        realm: "realm_to_auth_for",
+        http_opts: [] # anything you wish to pass to httpoison -> eg: recv_timeout: 15_000
     ]
   """
 
@@ -37,8 +38,9 @@ defmodule Solextria do
     end_ts = opts[:end_ts] || nil
     uri = opts[:uri] || "/XMLFeed/ss-xmlN.php?show_whl=1&show_faults=1&use_utc=1"
     realm = opts[:realm] || "Solren"
+    http_opts = opts[:http_opts] || []
 
-    result = Solextria.Fetcher.get_data(site_id, username, password, uri, realm, base_url, start_ts, end_ts)
+    result = Solextria.Fetcher.get_data(site_id, username, password, uri, realm, base_url, start_ts, end_ts, http_opts)
     Logger.debug inspect result
     case result do
       {:ok, %HTTPoison.Response{status_code: 200, body: {:error, body}}} ->
