@@ -10,7 +10,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
     ```elixir
     def deps do
-      [{:solextria, "~> 0.1.2"}]
+      [{:solextria, "~> 0.1.4"}]
     end
     ```
 
@@ -21,6 +21,20 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
       [applications: [:solextria]]
     end
     ```
+
+## Configuration
+
+You can configure global http_opts that you wish to pass to httpoison via the config as below:
+
+```elixir
+config :solextria, http_opts: [recv_timeout: 10_000]
+```
+
+You can also override the global config default on each request by specifying it as one of the args:
+
+```elixir
+Solextria.get(148, [http_opts: [recv_timeout: 15_000]])
+```
 
 ## Examples
 

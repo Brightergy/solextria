@@ -7,7 +7,7 @@ defmodule Solextria.Fetcher do
   import Solextria.Utils
   require Logger
 
-  @ua "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0"  
+  @ua "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0"
 
   @doc """
   Decode the xml response body
@@ -24,12 +24,12 @@ defmodule Solextria.Fetcher do
   @doc """
   Gets solectria data from solectria cloud
   """
-  def get_data(site_id, username, password, uri, realm, base_url, start_ts, end_ts) do
+  def get_data(site_id, username, password, uri, realm, base_url, start_ts, end_ts, http_opts) do
     auth_header = if username != nil && password != nil, do: HTTPDigex.create_digest(username, password, uri, realm), else: nil
     base_url = if base_url |> is_nil, do: "http://solrenview.com", else: base_url
     url = build_url("#{base_url}#{uri}", site_id, start_ts, end_ts)
     Logger.debug "The solectria URL is #{url}"
-    get(url, [{"Authorization", auth_header}, {"User-Agent", @ua}])
+    get(url, [{"Authorization", auth_header}, {"User-Agent", @ua}], build_http_opts(http_opts))
   end
 
   def build_url(url, site_id, start_ts, end_ts) do

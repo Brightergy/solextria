@@ -4,6 +4,8 @@ defmodule Solextria.Utils do
   """
   @epoch :calendar.datetime_to_gregorian_seconds({{1970, 1, 1}, {0, 0, 0}})
 
+  def build_http_opts(opts), do: Keyword.merge(Application.get_env(:solextria, :http_opts), opts)
+
   def current_ts, do: :os.system_time(:seconds)
 
   def normalized_ts(ts), do: div(ts, 60) * 60
@@ -12,10 +14,7 @@ defmodule Solextria.Utils do
 
   def datetime_to_ts(dt), do: dt |> :calendar.datetime_to_gregorian_seconds |> Kernel.-(@epoch)
 
-  def current_utc_time do
-    :erlang.now
-    |> :calendar.now_to_universal_time
-  end
+  def current_utc_time, do: :erlang.universaltime
 
   def current_time_to_iso8601 do
     current_utc_time
