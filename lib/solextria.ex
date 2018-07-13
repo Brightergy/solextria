@@ -29,7 +29,7 @@ defmodule Solextria do
   @doc """
   Module entry point to be used by external programs
   """
-  @spec get(String.t, List.t) :: Tuple.t
+  @spec get(String.t(), List.t()) :: Tuple.t()
   def get(site_id, opts \\ []) do
     username = opts[:username] || nil
     password = opts[:password] || nil
@@ -40,15 +40,30 @@ defmodule Solextria do
     realm = opts[:realm] || "Solren"
     http_opts = opts[:http_opts] || []
 
-    result = Solextria.Fetcher.get_data(site_id, username, password, uri, realm, base_url, start_ts, end_ts, http_opts)
-    Logger.debug inspect result
+    result =
+      Solextria.Fetcher.get_data(
+        site_id,
+        username,
+        password,
+        uri,
+        realm,
+        base_url,
+        start_ts,
+        end_ts,
+        http_opts
+      )
+
+    Logger.debug(inspect(result))
+
     case result do
       {:ok, %HTTPoison.Response{status_code: 200, body: {:error, body}}} ->
         {:error, body}
+
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, body}
+
       _ ->
-        Logger.info inspect result
+        Logger.info(inspect(result))
         {:error, "An error occurred while fetching data!"}
     end
   end

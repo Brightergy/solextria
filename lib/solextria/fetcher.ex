@@ -15,20 +15,26 @@ defmodule Solextria.Fetcher do
   @spec process_response_body(binary) :: term
   def process_response_body(body) do
     body
-    |> Solextria.Parser.parse
+    |> Solextria.Parser.parse()
   end
 
   def process_response(%HTTPoison.Response{status_code: 200, body: body}), do: body
-  def process_response(%HTTPoison.Response{status_code: status_code, body: body }), do: { status_code, body }
+
+  def process_response(%HTTPoison.Response{status_code: status_code, body: body}),
+    do: {status_code, body}
 
   @doc """
   Gets solectria data from solectria cloud
   """
   def get_data(site_id, username, password, uri, realm, base_url, start_ts, end_ts, http_opts) do
-    auth_header = if username != nil && password != nil, do: HTTPDigex.create_digest(username, password, uri, realm), else: nil
+    auth_header =
+      if username != nil && password != nil,
+        do: HTTPDigex.create_digest(username, password, uri, realm),
+        else: nil
+
     base_url = if base_url |> is_nil, do: "http://solrenview.com", else: base_url
     url = build_url("#{base_url}#{uri}", site_id, start_ts, end_ts)
-    Logger.debug "The solectria URL is #{url}"
+    Logger.debug("The solectria URL is #{url}")
     get(url, [{"Authorization", auth_header}, {"User-Agent", @ua}], build_http_opts(http_opts))
   end
 
@@ -49,26 +55,37 @@ defmodule Solextria.Fetcher do
   defp add_ts(url, start_ts, end_ts) when is_integer(start_ts) and is_integer(end_ts) do
     _add_ts(url, start_ts, end_ts)
   end
+
   defp add_ts(url, start_ts, end_ts) when is_nil(start_ts) and is_nil(end_ts) do
-    end_ts = current_ts
+    end_ts =
+      current_ts
       |> normalized_ts
+
     start_ts = end_ts - 60
     _add_ts(url, start_ts, end_ts)
   end
+
   defp add_ts(url, start_ts, end_ts) when is_nil(start_ts) do
     start_ts = end_ts - 60
     _add_ts(url, start_ts, end_ts)
   end
+
   defp add_ts(url, start_ts, end_ts) when is_nil(end_ts) do
     end_ts = start_ts + 60
     _add_ts(url, start_ts, end_ts)
   end
+
   defp add_ts(url, start_ts, end_ts), do: "#{url}&ts_start=#{start_ts}&ts_end=#{end_ts}"
+
   defp _add_ts(url, start_ts, end_ts) do
-    end_time = end_ts
+    end_time =
+      end_ts
       |> ts_to_iso8601
-    start_time = start_ts
+
+    start_time =
+      start_ts
       |> ts_to_iso8601
+
     "#{url}&ts_start=#{start_time}&ts_end=#{end_time}"
   end
 end

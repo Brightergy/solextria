@@ -2,20 +2,27 @@ defmodule Solextria.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :solextria,
-     version: "0.1.4",
-     description: "Solectria DataLogger data fetcher and parser",
-     source_url: "https://github.com/Brightergy/solextria",
-     homepage_url: "https://github.com/Brightergy/solextria",
-     package: package,
-     elixir: "~> 1.2 or ~> 1.3",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     test_coverage: [tool: ExCoveralls],
-     preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test, "coveralls.semaphore": :test],
-     docs: [logo: "logo/brighterlink_logo.png",
-            extras: ["README.md"]],
-     deps: deps()]
+    [
+      app: :solextria,
+      version: "0.1.4",
+      description: "Solectria DataLogger data fetcher and parser",
+      source_url: "https://github.com/Brightergy/solextria",
+      homepage_url: "https://github.com/Brightergy/solextria",
+      package: package(),
+      elixir: "~> 1.2 or ~> 1.3",
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test,
+        "coveralls.semaphore": :test
+      ],
+      docs: [logo: "logo/brighterlink_logo.png", extras: ["README.md"]],
+      deps: deps()
+    ]
   end
 
   # Configuration for the OTP application
@@ -40,7 +47,7 @@ defmodule Solextria.Mixfile do
       {:floki, "~> 0.10.0"},
       {:http_digex, "~> 0.0.1"},
       {:ex_doc, "~> 0.12", only: :dev},
-      {:excoveralls, "~> 0.5", only: :test},
+      {:excoveralls, "~> 0.5", only: :test}
     ]
   end
 
