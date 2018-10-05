@@ -8,19 +8,15 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
   1. Add `solextria` to your list of dependencies in `mix.exs`:
 
-    ```elixir
     def deps do
       [{:solextria, "~> 0.1.4"}]
     end
-    ```
 
   2. Ensure `solextria` is started before your application:
 
-    ```elixir
     def application do
       [applications: [:solextria]]
     end
-    ```
 
 ## Configuration
 
